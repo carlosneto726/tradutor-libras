@@ -1,5 +1,4 @@
 import tkinter as tk
-from time import sleep
 from tkVideoPlayer import TkinterVideo
 
 class Gui:

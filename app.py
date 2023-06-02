@@ -1,36 +1,67 @@
-
+from tkinter import messagebox
 import speech_recognition as sr
+from unidecode import unidecode
 from db import Conn
-from gui import Gui
+
 
 def ouvir_microfone():
     microfone = sr.Recognizer()
     
     with sr.Microphone() as source:
         microfone.adjust_for_ambient_noise(source)
-        print("Diga alguma coisa: ")
+        messagebox.showinfo(message='Diga alguma coisa')
         audio = microfone.listen(source)
         
     try:
-        frase = microfone.recognize_google(audio,language='pt-BR')
-        
+        frase = unidecode(microfone.recognize_google(audio,language='pt-BR'))
         print("Você disse: " + frase)
-        print(traduzir_frase(frase.lower())[0][1])
+        link = traduzir_frase(frase.lower())[0][1]
         
     except sr.UnknownValueError:
-        print("Não entendi")
+        messagebox.showinfo(message='Não entendi o você disse, tente novamente.')
+        link = None
+    except:
+        messagebox.showinfo(message='Não achei essa palavra no nosso banco de dados.')
+        link = None
         
-    return traduzir_frase(frase.lower())[0][1]
+    return link
 
-def traduzir_frase(frase):
+def traduzir_frase(word):
     conn = Conn("libras")
 
-    condicao = f"WHERE titulo = '{frase}'"
+    try:
+        condicao = f"WHERE titulo = '{word}' OR titulo LIKE '%{word}%'"
+    except:
+        print("Não achei essa palavra no banco de dados.")
 
     return conn.select(condicao)
 
-if __name__ == "__main__":
-    gui = Gui(ouvir_microfone())
+
+def retornaPalavraByLink(link):
+    conn = Conn("libras")
+
+    try:
+        condicao = f"WHERE link = '{link}'"
+    except:
+        print("Não achei essa palavra no banco de dados.")
+
+    return conn.select(condicao)
+
+
+def retornaLinkByPalavra(word):
+    conn = Conn("libras")
+
+    try:
+        condicao = f"WHERE titulo = '{word}' OR titulo LIKE '%{word}%'"
+    except:
+        print("Não achei essa palavra no banco de dados.")
+
+    return conn.select(condicao)
+
+#if __name__ == "__main__":
+#    link = ouvir_microfone()
+#    if link != None:
+#        Gui(link)
 
 
 

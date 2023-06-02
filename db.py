@@ -48,8 +48,13 @@ def srapping():
         link = sources.attrs['src']
         titulo = sources.attrs['src'].split("_")[3]
 
-        if sources.attrs['src'].split("_")[4] != "STREAM.mp4":
-            titulo = titulo + " " + sources.attrs['src'].split("_")[4]
+
+        try:
+            for n in range(4, 6):
+                if sources.attrs['src'].split("_")[n] != "STREAM.mp4":
+                    titulo = titulo + " " + sources.attrs['src'].split("_")[n]
+        except:
+            pass
 
         if "-" in titulo :
             titulo = titulo.split("-")[0] + " " + titulo.split("-")[1]
@@ -73,4 +78,7 @@ def store_data_db(conn):
 if __name__ == '__main__':
     conn = Conn("libras")
     store_data_db(conn)
-    print(conn.select())
+    print("banco de dados criado com sucesso.")
+    #print(conn.select())
+    #titulo = "album de foto"
+    #print(conn.select(f"WHERE titulo = '{titulo}' OR titulo LIKE '%{titulo}%'"))

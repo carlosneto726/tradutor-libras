@@ -1,7 +1,7 @@
 # Tradutor Libras
 > Programa que traduz texto / fala para sinais de Libras
 
-O tradutor de Libras traduz o que você falar / digitar no aplicativo, procura uma resposta no banco de dados libras.db e roda um video do sinal em libras.
+O tradutor de Libras traduz o que você falar / digitar no aplicativo, procura uma resposta no banco de dados libras.db e roda um video do sinal em libras. Os videos dos sinais foram pegos do site da [USP e-disciplinas](https://edisciplinas.usp.br/mod/glossary/view.php?id=197645&mode&hook=ALL&sortkey&sortorder&fullsearch=0&page=-1).
 
 ![](screenshot.png)
 
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 Rode o app.py
 
 ```sh
-pyhton app.py
+pyhton main.py
 ```
 
 <!-- 

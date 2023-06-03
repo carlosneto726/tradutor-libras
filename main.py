@@ -25,7 +25,8 @@ def listen():
     url = app.ouvir_microfone()
     label.config(text=f"A palavra {app.retornaPalavraByLink(url)[0][0]} em libras é:")
     videoplayer.load(url)
-    
+
+
 def text_input():
     inp = inputtxt.get(1.0, "end-1c")
     url = app.retornaLinkByPalavra(inp)[0][1]
@@ -33,32 +34,28 @@ def text_input():
     label.config(text=f"A palavra {app.retornaPalavraByLink(url)[0][0]} em libras é:")
     videoplayer.load(url)
 
-url = app.ouvir_microfone()
-root = tk.Tk()
-root.geometry("1000x600")
-root.title("Tradutor Libras")
 
-T = tk.Text(root, height = 5, width = 52)
-label = tk.Label(root, text=f"A palavra {app.retornaPalavraByLink(url)[0][0]} em libras é:")
-label.config(font =("Courier", 14))
-label.pack()
+if __name__ == "__main__":
 
-videoplayer = TkinterVideo(master=root,  scaled=True)
-videoplayer.load(url)
-videoplayer.pack(expand=True, fill="both")
-videoplayer.set_scaled(False)
-play_pause_btn = tk.Button(text="Play", command=play_pause)
-play_pause_btn.pack()
-listen_btn = tk.Button(text="Listen", command=listen)
-listen_btn.pack()
+    root = tk.Tk()
+    root.geometry("1000x600")
+    root.title("Tradutor Libras")
 
-inputtxt = tk.Text(root, height = 1, width = 50)
-inputtxt.pack()
+    T = tk.Text(root, height = 5, width = 52)
+    label = tk.Label(root, text=f"Bem vindo ao tradutor de libras, você pode falar ou digitar \numa palavra, e ela será traduzida em Libras.")
+    label.config(font =("Courier", 14))
+    videoplayer = TkinterVideo(master=root,  scaled=True)
+    videoplayer.bind("<<Ended>>", vido_ended )
+    play_pause_btn = tk.Button(text="Play", command=play_pause)
+    listen_btn = tk.Button(text="Ouvir", command=listen)
+    inputtxt = tk.Text(root, height = 1, width = 50)
+    input_button = tk.Button(text="Confirmar", command=text_input)
 
-input_button = tk.Button(text="Confirmar", command=text_input)
-input_button.pack()
+    label.pack()
+    videoplayer.pack(expand=True, fill="both")
+    play_pause_btn.pack()
+    listen_btn.pack()
+    inputtxt.pack()
+    input_button.pack()
 
-videoplayer.play()
-videoplayer.pause()
-videoplayer.bind("<<Ended>>", vido_ended )
-root.mainloop()
+    root.mainloop()

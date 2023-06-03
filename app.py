@@ -14,7 +14,7 @@ def ouvir_microfone():
         
     try:
         frase = unidecode(microfone.recognize_google(audio,language='pt-BR'))
-        print("Você disse: " + frase)
+        #print("Você disse: " + frase)
         link = traduzir_frase(frase.lower())[0][1]
         
     except sr.UnknownValueError:
@@ -32,7 +32,7 @@ def traduzir_frase(word):
     try:
         condicao = f"WHERE titulo = '{word}' OR titulo LIKE '%{word}%'"
     except:
-        print("Não achei essa palavra no banco de dados.")
+        messagebox.showinfo(message="Não achei essa palavra no banco de dados.")
 
     return conn.select(condicao)
 
@@ -43,7 +43,7 @@ def retornaPalavraByLink(link):
     try:
         condicao = f"WHERE link = '{link}'"
     except:
-        print("Não achei essa palavra no banco de dados.")
+        messagebox.showinfo(message="Não achei essa palavra no banco de dados.")
 
     return conn.select(condicao)
 
@@ -54,7 +54,7 @@ def retornaLinkByPalavra(word):
     try:
         condicao = f"WHERE titulo = '{word}' OR titulo LIKE '%{word}%'"
     except:
-        print("Não achei essa palavra no banco de dados.")
+        messagebox.showinfo(message="Não achei essa palavra no banco de dados.")
 
     return conn.select(condicao)
 
